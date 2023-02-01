@@ -1,0 +1,20 @@
+Compile
+
+//assemble
+    // o is for object files
+nasm -f elf64 -o pyth.o pythagoras.asm
+
+nasm -o pyth.o pythagoras.asm
+or
+nasm pythagoras.asm -o pyth.o
+
+//linking
+    //m64 creates executable in 64 bit code
+    //W all prints out all warnings 
+    // -o preceds the name of the executable file 
+g++ -Wall -m64 -std=c++17 -o py.out pyth.o
+
+
+
+
+
