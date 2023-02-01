@@ -1,1 +1,150 @@
+2023 Spring CPSC 240
+Assignment 1  Hypotenuse
+
+
+Overview
+
+Build a program in assembly language that will compute the length of the hypotenuse of a right triangle given the lengths of the two sides.
+
+
+
+
+Baseline required program
+
+
+
+
+Modular architecture
+
+
+
+
+
+
+
+
+
+
+
+
+
+The arrow points to the module being called.
+
+A module is a source file.   The module may contain many functions.   For this class will contain only one function.
+
+r.sh is a bash file.   The name could be anything.   The name could be the single letter ‘r’ or it could be a long name “pythagorianassignment1”.    The extension “sh” is symbolic for “shell”.  Most programmers include the extension in order to better remember the language of the code inside that file.
+
+The set of all three files is called “the program”.  The correct terminology is that a program is a collection (set) of source files.   A program is not a single file except in the trivial case were the set contains a single file.
+
+This baseline program is worth 10 points.
+
+(In future assignments the baseline program may be valued at a different number.)
+
+User dialog
+
+
+Welcome to Pythagoras’ Math Lab programmed by Adele Reed
+Please contact me at  adelereed@csu.fullerton.edu  if you need assistance.
+
+Enter the length of the first side of the triangle:   12.75
+Enter the length of the second side of the triangle:   8.2
+
+Thank you.  You entered two sides:   12.75000000  and 8.20000000
+The length of the hypotenuse is  15.63778114
+
+The main file received this number: 15.637781148424, and will keep it for now.
+We hoped you enjoyed your right angles.  Have a good day.  A zero will be sent to your operating system.
+
+
+//End of user dialog.
+
+
+
+Color codes
+Yellow:  Output from module driver
+Green:  Output from module pythagoras
+Black on white background:  Input from keyboard.
+
+
+Standard of precision
+The pythagoras module outputs 6 decimal digits on the right of the point.
+The driver module outputs 12 decimal digits on the right of the point.
+
+
+Update programmer’s info
+Replace Adele’s name and address with your own name and email address
+
+Be aware
+The value shown above for the hypotenuse is mathematically incorrect.  The purpose of that number is to show you the position of the number relative to the other parts of the dialog.
+Prepare your source files for submission
+
+Put an open source license into each submitted file.
+
+Document the initial section of each file in the style shown in all the sample program posted at the class website.
+
+Make sure the asm file exhibits a block structure in the text segment.
+
+
+
+Submission of programs
+
+At the time of this writing all the CS faculty are waiting to know if the higher administration has decided to allocate funds to hire graders to review your submitted programs.  We all hope for a positive reply from the CSUF administration approving funds to graders.   All of you enrolled in this class need the feedback telling you how you programming skills are developing.  We simply have to wait for the response.
+
+
+Let’s assume the administration has approved the request for student graders.
+
+The base line version of this program is worth 10 points.  When your program is complete and you have tested it with many different inputs then send the set of three source files to the professor as three attachments to a single email message.
+
+
+What happens if the request for student graders is rejected?   The course will continue.   There will be a total of 6 programming assignments this semester.  There will be no feedback.
+
+In all cases you should do the programming assignments because the midterm will be a test on the programming assignments of the first half of the semester.  That midterm test is worth a hundred points.  You should do the programs in order to have a chance to earn the hundred points of the midterm.
+Challenge Optional Program
+
+The Challenge program is worth 14 points if you opt for it.
+
+When you are reading this I assume that you have completed the baseline program.  The challenge program does not count unless the base line program is working perfectly.
+
+
+We all know that the length of a side of a triangle cannot be a negative number.  However, the baseline program does not take into account this fact.  Upgrade the pythagoras.asm file to detect and reject negative inputs.
+
+The user dialog looks like the following:
+
+Welcome to Pythagoras’ Math Lab programmed by Adele Reed
+Please contact me at  adelereed@csu.fullerton.edu  if you need assistance.
+
+Enter the length of the first side of the triangle:   -10.0
+Negative values not allowed.  Try again:        -1.00
+Negative values not allowed.  Try again:        5.0
+Enter the length of the second side of the triangle:   -8.2
+Negative value not allowed.  Try again:          3.5
+
+Thank you.  You entered two sides:   5.00000000  and 3.50000000
+The length of the hypotenuse is  6.63778114
+
+The main file received this number: 6.637781148424, and will keep it for now.
+We hoped you enjoyed your right angles.  Have a good day.  A zero will be sent to your operating system.
+
+
+//End of user dialog.
+
+
+Notice how negative inputs are rejected until the user enters a positive or zero number.
+
+
+
+
+
+Last day to submit assignments for credit:  February 6, 2023 before 11:59pm.
+
+Programs submitted on Feb 7 or later will not be reviewed.
+Commercial advertisement
+
+If your personal computer has a full-feature word processor like “Word” then this is not for you.  This document that you are reading now was created with Libre Office Writer, a full-featured word processor produced in Europe.   Libre Office is available as a free-of-charge download from https://www.libreoffice.org/  There are versions available for Mac, Windows, and Linux.
+
+But, someone will say I spent extra money to get Microsoft Word on my computer.  Simply open this file you’re reading now in Word and see what Word does to colors shown on previous pages.
+
+Someone will say that he or she uses Google Docs for editing.  Yes, Docs is a great tool and it shows the colors correctly, but try to use Docs when you are not network connected.
+
+Now you know.
 
