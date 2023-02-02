@@ -8,8 +8,8 @@ global pythagoras:
 segment .data
 length1 db "Enter the length of the first side of the triangle: ",0
 length2 db "Enter the length of the second side of the triangle: ",0
-response db "Thank you. You entered two sides: %1.4lf and %1.4lf", 0
-hypotenuse db "The length of the hypotenuse is %1.4lf",0
+response db "Thank you. You entered two sides: %1.4lf and %1.4lf",10 ,0
+hypotenuse db "The length of the hypotenuse is %1.4lf",10, 0
 double_form db "%lf", 0 
 
 segment .bss
@@ -17,28 +17,35 @@ segment .bss
 
 segment .text
 pythagoras:
-;=============================  Backup GPRs =============================================
+
+;Prolog ===== Insurance for any caller of this assembly module ========================================================
+;Any future program calling this module that the data in the caller's GPRs will not be modified.
 push rbp
-mov rbp, rsp
-push rdi
-push rsi
-push rdx 
-push rcx
-push r8
-push r9
-push r10
-push r11
-push r12
-push r13
-push r14
-push r15
-push rbx
-pushf
-;=========================================================================================
+mov  rbp,rsp
+push rdi                                                    ;Backup rdi
+push rsi                                                    ;Backup rsi
+push rdx                                                    ;Backup rdx
+push rcx                                                    ;Backup rcx
+push r8                                                     ;Backup r8
+push r9                                                     ;Backup r9
+push r10                                                    ;Backup r10
+push r11                                                    ;Backup r11
+push r12                                                    ;Backup r12
+push r13                                                    ;Backup r13
+push r14                                                    ;Backup r14
+push r15                                                    ;Backup r15
+push rbx                                                    ;Backup rbx
+pushf                                                       ;Backup rflags
+
+
 ;Prompt for side 1
+push qword 0
+
+push qword 0
 mov rax, 0 
 mov rdi, length1
 call printf
+pop rax
 
 ;Get side 1 and input to xmm12
 push qword 0                    ;push 8 bytes of zeroes onto stack 
@@ -49,7 +56,9 @@ call scanf
 movsd xmm12, [rsp]
 pop rax
 
-;Prompt for side mov rax, 0 
+;Prompt for side 2
+push qword 0
+mov rax, 0 
 mov rdi, length2
 call printf
 pop rax
@@ -73,28 +82,22 @@ call printf
 pop rax
 
 ;square side 1 and 2
-push qword 0 
 mov rax, 2
 mulsd xmm12, xmm12
 mulsd xmm13, xmm13
-pop rax
 
 ;add side 1 and 2 
-push qword 0
 mov rax, 1
 addsd xmm12, xmm13
-pop rax
 
 ;compute hypotenuse
-push qword 0
 mov rax, 2 
 sqrtsd xmm12, xmm12
 movsd xmm13, xmm12
-pop rax
 
 ;print out hypotenuse
 push qword 0 
-mov rax, 0
+mov rax, 1
 mov rdi, hypotenuse
 movsd xmm0, xmm13
 call printf
@@ -103,17 +106,13 @@ pop rax
 ;return to driver 
 mov rax, 1
 movsd xmm0, xmm13
+
 pop rax
 
 
 
 
-
-
-
-
-
-;===== Restore GPRs ===================================================================
+;===== Restore original values to integer registers ===================================================================
 popf                                                        ;Restore rflags
 pop rbx                                                     ;Restore rbx
 pop r15                                                     ;Restore r15
@@ -131,7 +130,3 @@ pop rdi                                                     ;Restore rdi
 pop rbp                                                     ;Restore rbp
 
 ret
-
-
-
-
