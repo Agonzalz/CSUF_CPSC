@@ -3,12 +3,11 @@
 ;declare constants outside functions this fucntion
 extern printf
 extern scanf
-global pythagoras
+global pythagoras:
 
 segment .data
 length1 db "Enter the length of the first side of the triangle: ",0
 length2 db "Enter the length of the second side of the triangle: ",0
-prompt db "Please enter 2 sides separated by ws followed by enter"
 response db "Thank you. You entered two sides: %1.4lf and %1.4lf", 0
 hypotenuse db "The length of the hypotenuse is %1.4lf",0
 double_form db "%lf", 0 
@@ -50,10 +49,10 @@ call scanf
 movsd xmm12, [rsp]
 pop rax
 
-;Prompt for side 2
-mov rax, 0 
+;Prompt for side mov rax, 0 
 mov rdi, length2
 call printf
+pop rax
 
 ;Second float to xmm13
 push qword 0   
@@ -65,13 +64,50 @@ movsd xmm13, [rsp]
 pop rax
 
 ;Print 2 sides
+push qword 0
 mov rax, 2 
 mov rdi, response 
 movsd xmm0, xmm12
 movsd xmm1, xmm13
 call printf
+pop rax
 
-;Compute hypotenuse
+;square side 1 and 2
+push qword 0 
+mov rax, 2
+mulsd xmm12, xmm12
+mulsd xmm13, xmm13
+pop rax
+
+;add side 1 and 2 
+push qword 0
+mov rax, 1
+addsd xmm12, xmm13
+pop rax
+
+;compute hypotenuse
+push qword 0
+mov rax, 2 
+sqrtsd xmm12, xmm12
+movsd xmm13, xmm12
+pop rax
+
+;print out hypotenuse
+push qword 0 
+mov rax, 0
+mov rdi, hypotenuse
+movsd xmm0, xmm13
+call printf
+pop rax
+
+;return to driver 
+mov rax, 1
+movsd xmm0, xmm13
+pop rax
+
+
+
+
 
 
 
