@@ -29,6 +29,7 @@
 //  Date of reorganization of comments: 2023 February 21
 //  Files in this program: manager.asm, main.c, display_array.cc, magnitude.asm, input_array.asm, append.asm, run.sh
 //  Status: Finished
+//  References Consulted: Johnson SI, x86-64 Assembly Language Programming by Ed Jorgensen
 //
 //This file
 //   File name: display_array.c
