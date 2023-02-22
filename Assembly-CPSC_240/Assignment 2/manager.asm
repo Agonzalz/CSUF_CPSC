@@ -53,6 +53,7 @@ extern append
 
 global manager 
 
+length equ 50
 
 segment .data
 prompt_A db "This program will manage your arrays of 64 bit floats" , 10, 
@@ -77,8 +78,8 @@ append_magnitude db 10, "The magnitude of A", 0xE2, 0x8A, 0x95, " B is %.5lf", 1
 
 segment .bss                        ;reserved for uninitialized data
 
-myarray_A resq 50                ;reserve empty array of size 20 before run time
-myarray_B resq 50
+myarray_A resq length              ;reserve empty array of size 20 before run time
+myarray_B resq length
 appended_array resq 100
 
 segment .text 
@@ -117,7 +118,7 @@ pop rax
 push qword 0
 mov rax, 0 
 mov rdi, myarray_A    ;array as first parameter
-mov rsi, 8     ;length of array as second parameter
+mov rsi, length     ;length of array as second parameter
 call input_array
 mov r15, rax        ;r15 holds the size of the array
 pop rax
@@ -141,7 +142,7 @@ pop rax
 push qword 0 
 mov rax, 0
 mov rdi, myarray_A
-mov rsi, 8
+mov rsi, length
 call magnitude
 movsd xmm15, xmm0           ;store ther return of magnitude function into xmm15
 pop rax
@@ -165,7 +166,7 @@ pop rax
 push qword 0
 mov rax, 0 
 mov rdi, myarray_B      ;array as first parameter
-mov rsi, 8              ;length of array as second parameter
+mov rsi, length             ;length of array as second parameter
 call input_array
 mov r14, rax            ;r15 holds the size of the array
 pop rax
@@ -189,7 +190,7 @@ pop rax
 push qword 0 
 mov rax, 0
 mov rdi, myarray_B
-mov rsi, 8
+mov rsi, length
 call magnitude
 movsd xmm14, xmm0           ;store the return of magnitude into novolatile register
 pop rax
