@@ -235,7 +235,7 @@ pop rax
 cmp r15, 0       ;condition to check if the input is negative
 jl invalid_Input
 
-cmp r15, 100         ;condition to check if the input is negative
+cmp r15, 100         ;condition to check if the input is more than allowed
 jg invalid_Input
 
 jmp continue
