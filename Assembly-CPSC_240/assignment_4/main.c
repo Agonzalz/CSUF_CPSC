@@ -11,8 +11,7 @@ extern double manager();  // assembly module that will direct calls to other fun
 int main(int argc, char *argv[])
 {
 
-  printf("Welcome to Arrays of Integers\nBrought to you by Antonio Gonzalez\n\n");
-
-  double answer = manager();  // manager returns the magnitude of the appended arrays
-  printf("Main received %.10lf and will keep it for future use.\n", answer);
-  printf("Main will return a 0 to the opearating system. Bye.\n");
+  double nanoseconds = manager();  // manager returns the magnitude of the appended arrays
+  printf("The Main function has received %.5lf and will keep it for future reference.\n", nanoseconds);
+  printf("Main will return a zero to the opearating system. Bye.\n");
+}

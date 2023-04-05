@@ -3,13 +3,19 @@ extern scanf
 
 global manager 
 
-length equ 50
+;length equ 256
 
 segment .data
+    welcome_msg db "Welcome to Square Root Benchmarks by Antonio Gonzalez", 10, 
+                db "For customer service contact me at antoniog@csu.fullerton.edu", 10, 0
+    
+    cpu_display db "Your CPU is %s", 10, 0 
 
+    speed_display db "Your max clock speed is %d MHz", 10, 0 
 
 segment .bss                        ;reserved for uninitialized data
 
+    cpu_name resb 256
 
 segment .text 
 
@@ -36,6 +42,66 @@ pushf                                                       ;Backup rflags
 
 push qword 0        ;remain on the boundary
 
+;Display welcome message
+push qword 0
+mov rax, 0 
+mov rdi, welcome_msg
+call printf
+pop rax
+
+;============================= Get CPU Name =========================================================
+mov r15, 0x80000002     ;value gets passed to cpuid for info about processor 
+mov rax, r15 
+cpuid                  ;identify CPU
+
+;first 4 characters
+mov [cpu_name], rax 
+mov [cpu_name + 4], rbx 
+mov [cpu_name + 8], rcx 
+mov [cpu_name + 12], rdx 
+
+;call again for next 4 characters 
+mov r15, 0x80000003     
+mov rax, r15 
+cpuid
+
+;next 4 characters
+mov [cpu_name + 16], rax 
+mov [cpu_name + 20], rbx 
+mov [cpu_name + 24], rcx 
+mov [cpu_name + 28], rdx 
+
+;call again for next 4 characters 
+mov r15, 0x80000004     
+mov rax, r15 
+cpuid
+
+;last 4 characters
+mov [cpu_name + 32], rax 
+mov [cpu_name + 36], rbx 
+mov [cpu_name + 40], rcx 
+mov [cpu_name + 44], rdx 
+
+push qword 0 
+mov rax, 0 
+mov rdi, cpu_display
+mov rsi, cpu_name
+call printf
+pop rax
+;=====================================================================================================
+
+;get cpu clock speed 
+mov rax,0x0000000000000016
+cpuid
+mov rdx, rbx      ;max frequency to rdx
+
+;Display: "Your max clock speed is... "
+push qword 0
+mov rax, 0
+mov rdi, speed_display
+mov rsi, rdx
+call printf
+pop rax
 
 pop rax 
 
