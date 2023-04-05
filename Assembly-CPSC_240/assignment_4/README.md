@@ -16,33 +16,7 @@ Why not simply execute the instruction one time and measure the elapsed time?  T
 
 ## Sample dialog baseline
 
-Welcome to Square Root Benchmarks by Jeffrey Miller
-
-For customer service contact me at millerx86@csu.fullerton.edu
-
-Your CPU is AMD Ryzen 3640.
-
-Your max clock speed is 2800 MHz
-
-Please enter a floating radicand for square root bench marking:  12.2
-
-The square root of 12.1999999995 is 3.78457514234.
-
-Next enter the number of times iteration should be performed:  1500000
-
-The time on the clock is 2451294 tics.
-
-The bench mark of the sqrtsd instruction is in progress.
-
-The time on the clock is 2451399 tics and the benchmark is completed.
-
-The elapsed time was 238884 tics
-
-The time for one square root computation is 27.36841 tics which equals 9.28441 ns.
-
-The main function has received this number 9.28441 and will keep it for future reference.
-
-The main function will return a zero to the operating system.
+![image](https://user-images.githubusercontent.com/60372524/229991510-36b9623a-8a58-4a01-8dfa-11d99725ab09.png)
 
 
 Color codes:
