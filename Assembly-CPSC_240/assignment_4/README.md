@@ -7,6 +7,9 @@ Abstract view
 
 Create a program with modules in the three languages of this course that will benchmark the performance of the square root instruction in SSE and also the square root program in the standard C library
 
+![image](https://user-images.githubusercontent.com/60372524/229990531-9c6745ba-b72c-4870-bbd2-49f4dada459f.png)
+
+
 
 Detail
 
