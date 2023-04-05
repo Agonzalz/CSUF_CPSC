@@ -101,6 +101,9 @@ This is for those people who claim the only way to send file is via a cloud stor
 
 When you attach files to your email it must look like this:
 
+![image](https://user-images.githubusercontent.com/60372524/229990760-bbdc65e0-f97f-492d-ae52-7a52123ea8d0.png)
+
+
 
 You can physically see the files are intrinsically part of the email itself.  That is good.  Your files will be separated from the email message and will be graded.
 
