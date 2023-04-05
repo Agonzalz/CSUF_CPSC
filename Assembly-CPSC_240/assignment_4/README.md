@@ -1,19 +1,20 @@
-Introduction
+## Introduction
 
 The term “benchmark” generally means the act of measuring the performance of something.  In computer science the term is used to describe the performance of software or hardware components.  Bench marking is not testing to uncover bugs.  We assume bugs have been removed during earlier testing.  Bench marking seeks to measure the use of time and space by a program or by a processor.
 
 
-Abstract view
+## Abstract view
 
 Create a program with modules in the three languages of this course that will benchmark the performance of the square root instruction in SSE and also the square root program in the standard C library
 
 
-Detail
+##Detail
 
 We want to know how much time is require for an instruction to execute.  We’ll use the sqrtsd instruction in the SSE component.  The plan is to execute to execute the sqrtsd instruction many times, say 10 million times.   Measure the time required for those 10 million computations, then divide the execution time by 10 million to obtain a kind of average execution time for one instance of the sqrtsd instruction.
 
 Why not simply execute the instruction one time and measure the elapsed time?  The simple reason is that performance varies and is dependent on other factors.  One factor is the clock speed of the cpu will vary with time.  However, the average execution time computed over millions of executions is probably a reasonably accurate measure of the true execution time for the instruction.
-Sample dialog baseline
+
+##Sample dialog baseline
 
 Welcome to Square Root Benchmarks by Jeffrey Miller
 
@@ -53,7 +54,8 @@ Green:  main
 White:  manager
 
 Most of the output come from manager.
-Notes about the dialog and about other things
+
+##Notes about the dialog and about other things
 
 A tic is a unit of time used by computers.   A second is a unit of time used by humans.  “ns” means nanosecond.  The conversion from number of tics to number of nanoseconds requires knowledge of the machines clock speed.
 
@@ -79,7 +81,7 @@ The getfrequency function mentioned in this document has been created many times
 
 Is reusing someone’s software ok?  Yes, provided that person has placed a suitable software license on it.  In commercial programming all new project reuse software whenever available and licensed properly for reuse.
 
-Calling diagram
+##Calling diagram
 
 
 ![image](https://user-images.githubusercontent.com/60372524/229990653-87bd5776-6738-4ac1-a51b-96553accd1c2.png)
@@ -95,7 +97,7 @@ Don’t use any e-registers unless you are living two decades ago and you are vi
 
 
 
-What is an email attachment.
+##What is an email attachment.
 
 This is for those people who claim the only way to send file is via a cloud storage service.
 
@@ -111,7 +113,7 @@ Anything else is a link to never never land, and will not be graded.
 
 
 
-Conclusion
+$$Conclusion
 
 Due time:  April 16 before 4:00am.  After 4am get 3 hours of sleep and be ready for class on Monday.
 
