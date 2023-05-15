@@ -1,4 +1,4 @@
-Preview
+## Preview
 
 The goal of this assignment is to practice two techniques: validation of incoming numbers and performance comparison of two versions of the sine function.
 
@@ -10,34 +10,9 @@ In lecture we’ll cover validation of float number and the Taylor series for th
 
 
 
+## Baseline sample dialog
 
-
-
-
-
-
-
-Please continue to the next page.
-Baseline sample dialog
-
-Welcome to Asterix Software Development Corporation
-
-This program Sine Function Benchmark is maintained by Timmy Fernandez
-
-Please enter your name:  Chris Creel
-
-It is nice to meet you Chris Creel.  Please enter an angle number in degrees:  22.5
-
-Thank you.  Please enter the number of terms in a Taylor series to be computed:  200
-
-Thank you.  The Taylor series will be used to compute the sine of your angle.
-
-The computation completed in 395 tics and the computed value is 0.382683432
-
-Thank you for using this program.  Have a great day.
-
-The driver program received this number  395.   A zero will be returned to the OS.  Bye.
-
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/a826959f-d437-4e98-ae12-2f967b4051d4)
 
 The yellow portion is produced by the assembly source file we have called manager.asm In the past.
 
@@ -48,34 +23,10 @@ Yes, there are only two source files in this program, namely: driver and manager
 The language of the driver is C++ or C.  You pick one.   To enhance your value in the job market you should pick C, but again that’s your choice.
 
 Don’t forget to convert the number in degrees to a number in radians.  Then apply the Taylor series to the number in radians.
-Sample challenge dialog
 
-Welcome to Asterix Software Development Corporation
+## Sample challenge dialog
 
-This program Sine Function Benchmark is maintained by Timmy Fernandez
-
-Please enter your name:  Chris Creel
-
-It is nice to meet you Chris Creel.  Please enter an angle number in degrees:  22.5
-
-Thank you.  Please enter the number of terms in a Taylor series to be computed:  20
-
-Thank you.  The Taylor series will be used to compute the sine of your angle.
-
-The computation completed in 395 tics and the computed value is 0.382683432
-
-Next the sine of 22.499999995 will be computed by the function “sin” in the library <math.h>.
-
-The computation completed in 448 tics and gave the value 0.382683991
-
-Thank you for using this program.  Have a great day.
-
-The driver program received this number  395.   A zero will be returned to the OS.  Bye.
-
-//End of sample dialog
-
-
-
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/d29224f7-3748-46d1-8315-187929b23c5c)
 
 We will discover which function executes faster: yours or the one in <math.h>.
 
@@ -84,40 +35,12 @@ We will also discover if the two functions produce the same value.
 In lecture we can talk about some horrible rumors about function in the math library, and how they are able to execute so fast.
 
 Concept discussion:  Suppose we want the sine value to be accurate to 8 decimal digits on the of the point.   How many terms should be included in the Taylor series.  Assume that the input value x lies between 0.0 and 2π.
-Sample challenge dialog with input errors
 
-Welcome to Asterix Software Development Corporation
+## Sample challenge dialog with input errors
 
-This named Sine Function Benchmark is maintained by Timmy Fernandez
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/27d41e0b-e3d5-4501-a6eb-a55aa5a4030a)
 
-Please enter your name:  Chris Creel
-
-It is nice to meet you Chris Creel.  Please enter an angle number in degrees:  22.W5
-Invalid. Please try again:  22R.99
-Invalid.  Please try again  22.57.81
-Invalid.  Please try again  35.0
-
-Thank you.  Please enter the number of terms in a Taylor series to be computed:  25
-
-Thank you.  The Taylor series will be used to compute the sine of your angle.
-
-The computation completed in 395 tics and the computed value is 0.382683432
-
-Next the sine of 22.499999995 will be computed by the function “sin” in the math library.
-
-The computation completed in 448 tics and gave the value 0.382683991
-
-Thank you for using this program.  Have a great day.
-
-The driver program received this number 0.382683433487.   A zero will be returned to the OS.  Bye.
-
-
-//End of sample dialog
-
-
-
-
-Conclusion
+## Conclusion
 
 You may program the baseline and submit it for points.  At a later time you may program the challenge and submit it for additional points.
 
