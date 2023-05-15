@@ -1,3 +1,4 @@
+# Benchmark
 ## Introduction
 
 The term “benchmark” generally means the act of measuring the performance of something.  In computer science the term is used to describe the performance of software or hardware components.  Bench marking is not testing to uncover bugs.  We assume bugs have been removed during earlier testing.  Bench marking seeks to measure the use of time and space by a program or by a processor.
