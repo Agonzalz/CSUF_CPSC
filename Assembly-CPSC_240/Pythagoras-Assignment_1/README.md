@@ -14,15 +14,7 @@ Build a program in assembly language that will compute the length of the hypoten
 
 ### Modular architecture
 
-
-
-
-
-
-
-
-
-
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/9c3b77ba-6730-4975-8a02-8a9c002ec5e4)
 
 
 
@@ -39,6 +31,7 @@ This baseline program is worth 10 points.
 (In future assignments the baseline program may be valued at a different number.)
 
 ## User dialog
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/26d0b258-a007-449e-8eca-dfcbb8ce3a7b)
 
 
 
@@ -59,7 +52,8 @@ Replace Adele’s name and address with your own name and email address
 
 Be aware
 The value shown above for the hypotenuse is mathematically incorrect.  The purpose of that number is to show you the position of the number relative to the other parts of the dialog.
-Prepare your source files for submission
+
+## Prepare your source files for submission
 
 Put an open source license into each submitted file.
 
@@ -69,7 +63,7 @@ Make sure the asm file exhibits a block structure in the text segment.
 
 
 
-Submission of programs
+## Submission of programs
 
 At the time of this writing all the CS faculty are waiting to know if the higher administration has decided to allocate funds to hire graders to review your submitted programs.  We all hope for a positive reply from the CSUF administration approving funds to graders.   All of you enrolled in this class need the feedback telling you how you programming skills are developing.  We simply have to wait for the response.
 
@@ -82,7 +76,8 @@ The base line version of this program is worth 10 points.  When your program is 
 What happens if the request for student graders is rejected?   The course will continue.   There will be a total of 6 programming assignments this semester.  There will be no feedback.
 
 In all cases you should do the programming assignments because the midterm will be a test on the programming assignments of the first half of the semester.  That midterm test is worth a hundred points.  You should do the programs in order to have a chance to earn the hundred points of the midterm.
-Challenge Optional Program
+
+##  Challenge Optional Program
 
 The Challenge program is worth 14 points if you opt for it.
 
@@ -93,41 +88,8 @@ We all know that the length of a side of a triangle cannot be a negative number.
 
 The user dialog looks like the following:
 
-Welcome to Pythagoras’ Math Lab programmed by Adele Reed
-Please contact me at  adelereed@csu.fullerton.edu  if you need assistance.
-
-Enter the length of the first side of the triangle:   -10.0
-Negative values not allowed.  Try again:        -1.00
-Negative values not allowed.  Try again:        5.0
-Enter the length of the second side of the triangle:   -8.2
-Negative value not allowed.  Try again:          3.5
-
-Thank you.  You entered two sides:   5.00000000  and 3.50000000
-The length of the hypotenuse is  6.63778114
-
-The main file received this number: 6.637781148424, and will keep it for now.
-We hoped you enjoyed your right angles.  Have a good day.  A zero will be sent to your operating system.
-
-
-//End of user dialog.
+![image](https://github.com/Agonzalz/CSUF_CPSC/assets/60372524/07b01ab3-d8fd-4011-a748-8e2718a3b232)
 
 
 Notice how negative inputs are rejected until the user enters a positive or zero number.
-
-
-
-
-
-Last day to submit assignments for credit:  February 6, 2023 before 11:59pm.
-
-Programs submitted on Feb 7 or later will not be reviewed.
-Commercial advertisement
-
-If your personal computer has a full-feature word processor like “Word” then this is not for you.  This document that you are reading now was created with Libre Office Writer, a full-featured word processor produced in Europe.   Libre Office is available as a free-of-charge download from https://www.libreoffice.org/  There are versions available for Mac, Windows, and Linux.
-
-But, someone will say I spent extra money to get Microsoft Word on my computer.  Simply open this file you’re reading now in Word and see what Word does to colors shown on previous pages.
-
-Someone will say that he or she uses Google Docs for editing.  Yes, Docs is a great tool and it shows the colors correctly, but try to use Docs when you are not network connected.
-
-Now you know.
 
