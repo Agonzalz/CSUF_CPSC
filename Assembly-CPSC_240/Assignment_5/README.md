@@ -1,3 +1,5 @@
+# Data Validation
+
 ## Preview
 
 The goal of this assignment is to practice two techniques: validation of incoming numbers and performance comparison of two versions of the sine function.
