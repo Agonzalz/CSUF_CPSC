@@ -21,7 +21,7 @@ int main() {
 		    exit(-1);
          }
         if (child_id == 0) {
-            execlp("firefox","firefox", NULL);
+            execlp("/snap/bin/firefox","firefox", NULL);
         } else {
             printf("child is waiting\n"); 
             wait(NULL);
