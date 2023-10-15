@@ -82,13 +82,13 @@ void computeHash(const string& hashProgName)
 	cmdLine += " ";
 	cmdLine += fileNameRecv;	
 	//fprintf(stderr, "%s\n", cmdLine.c_str());
-	//fprintf(stderr, "%s\n", fileNameRecv);
+	fprintf(stderr, "%s\n", fileNameRecv);
 	
     /* TODO: Open the pipe to the program (specified in cmdLine) 
 	* using popen() and save the ouput into hashValue. See popen.cpp
     * for examples using popen.
 	*/
-	FILE* output = popen(fileNameRecv, "r");
+	FILE* output = popen(cmdLine.c_str(), "r");
 	
 	if (fread(hashValue, sizeof(char), sizeof(char) * HASH_VALUE_LENGTH, output) < 0) {
 		perror("fread");
