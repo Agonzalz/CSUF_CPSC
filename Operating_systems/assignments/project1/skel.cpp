@@ -56,14 +56,7 @@ void computeHash(const string& hashProgName)
 	
 	
 	/** TODO: Now, lets read a message from the parent **/
-	if(close(childToParentPipe[READ_END]) < 0 ) {
-		perror("close in child");
-		exit(-1);
-	}
-	if(close(parentToChildPipe[WRITE_END]) < 0 ) {
-		perror("close 2in child");
-		exit(-1);
-	}
+
 	if (read(parentToChildPipe[READ_END], fileNameRecv, sizeof(fileNameRecv)) < 0 ) {
 		perror("read in child");
 		exit(-1);
@@ -81,8 +74,6 @@ void computeHash(const string& hashProgName)
 	string cmdLine(hashProgName);
 	cmdLine += " ";
 	cmdLine += fileNameRecv;	
-	//fprintf(stderr, "%s\n", cmdLine.c_str());
-	fprintf(stderr, "%s\n", fileNameRecv);
 	
     /* TODO: Open the pipe to the program (specified in cmdLine) 
 	* using popen() and save the ouput into hashValue. See popen.cpp
@@ -213,14 +204,14 @@ int main(int argc, char** argv)
 
 		{
 			/** TODO: close the unused ends of two pipes **/
-			/*if(close(parentToChildPipe[READ_END]) < 0 ) {
-				perror("write in main ");
-				exit (-1);
-			}
-			if (close(childToParentPipe[WRITE_END]) < 0 ) {
-				perror("read in main bad ");
-				exit (-1);
-			}*/
+		if(close(childToParentPipe[READ_END]) < 0 ) {
+			perror("close in child");
+			exit(-1);
+		}
+		if(close(parentToChildPipe[WRITE_END]) < 0 ) {
+			perror("close 2in child");
+			exit(-1);
+		}
 
 			/* Compute the hash */
 			computeHash(hashProgs[hashAlgNum]);
