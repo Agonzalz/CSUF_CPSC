@@ -56,15 +56,15 @@ void computeHash(const string& hashProgName)
 	
 	
 	/** TODO: Now, lets read a message from the parent **/
-	fprintf(stderr, "Child reading from parent");
+	//fprintf(stderr, "Child reading from parent");
 	if (read(parentToChildPipe[READ_END], fileNameRecv, sizeof(fileNameRecv)) < 0 ) {
 		perror("read compute");
 		exit(-1);
 	}
-	/*if(close(parentToChildPipe[READ_END]) < 0) {
+	if(close(parentToChildPipe[READ_END]) < 0) {
 		perror("close");
 		exit (-1);
-	}*/
+	}
 
 	
 	/* Glue together a command line <PROGRAM NAME>. 
@@ -79,8 +79,17 @@ void computeHash(const string& hashProgName)
     * for examples using popen.
 	*/
 	FILE* output = popen(cmdLine.c_str(), "r");
-	if (fread(hashValue, sizeof(char), sizeof(char), output) < 0) {
+	fprintf(stderr, "popen process area \n");
+	while (fgets(hashValue, sizeof(hashValue), output)) {
+		printf("%s", hashValue);
+	}
+	if (fread(hashValue, sizeof(char), sizeof(char) *HASH_VALUE_LENGTH, output) < 0) {
 		perror("fread");
+		exit(-1);
+	}
+	if(!output)
+	{
+		perror("popen");
 		exit(-1);
 	}
 	if (pclose(output) < 0) {
@@ -90,15 +99,15 @@ void computeHash(const string& hashProgName)
 
 
 	/* TODO: Send a string to the parent*/
-	fprintf(stderr, "child to parenbt");
+	fprintf(stderr, "hash: ");
 	if (write(childToParentPipe[WRITE_END], hashValue, sizeof(hashValue)) < 0) {
 		perror("write"); 
 		exit (-1);
 	}
-	/*if(close(childToParentPipe[WRITE_END]) < 0) {
+	if(close(childToParentPipe[WRITE_END]) < 0) {
 		perror("close");
 		exit (-1);
-	}*/
+	}
 
 
 	/* The child terminates */
@@ -142,6 +151,10 @@ void parentFunc(const string& hashProgName)
 		perror("read in parent ");
 		exit(-1);
 	 }
+	 if (close(childToParentPipe[READ_END]) < 0) {
+		perror("close");
+		exit(-1);
+	}
 
 	  /* Print the hash value */
 	  fprintf(stdout, "%s HASH VALUE: %s\n", hashProgName.c_str(), hashValue);
