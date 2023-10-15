@@ -56,15 +56,23 @@ void computeHash(const string& hashProgName)
 	
 	
 	/** TODO: Now, lets read a message from the parent **/
-	//fprintf(stderr, "Child reading from parent");
+	if(close(childToParentPipe[READ_END]) < 0 ) {
+		perror("close in child");
+		exit(-1);
+	}
+	if(close(parentToChildPipe[WRITE_END]) < 0 ) {
+		perror("close 2in child");
+		exit(-1);
+	}
 	if (read(parentToChildPipe[READ_END], fileNameRecv, sizeof(fileNameRecv)) < 0 ) {
-		perror("read compute");
+		perror("read in child");
 		exit(-1);
 	}
 	if(close(parentToChildPipe[READ_END]) < 0) {
 		perror("close");
 		exit (-1);
 	}
+	
 
 	
 	/* Glue together a command line <PROGRAM NAME>. 
@@ -79,11 +87,8 @@ void computeHash(const string& hashProgName)
     * for examples using popen.
 	*/
 	FILE* output = popen(cmdLine.c_str(), "r");
-	fprintf(stderr, "popen process area \n");
-	while (fgets(hashValue, sizeof(hashValue), output)) {
-		printf("%s", hashValue);
-	}
-	if (fread(hashValue, sizeof(char), sizeof(char) *HASH_VALUE_LENGTH, output) < 0) {
+	
+	if (fread(hashValue, sizeof(hashValue), HASH_VALUE_LENGTH, output) < 0) {
 		perror("fread");
 		exit(-1);
 	}
@@ -203,14 +208,14 @@ int main(int argc, char** argv)
 
 		{
 			/** TODO: close the unused ends of two pipes **/
-			if(close(parentToChildPipe[WRITE_END]) < 0 ) {
+			/*if(close(parentToChildPipe[READ_END]) < 0 ) {
 				perror("write in main ");
 				exit (-1);
 			}
-			if (close(childToParentPipe[READ_END]) < 0 ) {
+			if (close(childToParentPipe[WRITE_END]) < 0 ) {
 				perror("read in main bad ");
 				exit (-1);
-			}
+			}*/
 
 			/* Compute the hash */
 			computeHash(hashProgs[hashAlgNum]);
