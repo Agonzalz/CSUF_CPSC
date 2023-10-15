@@ -128,8 +128,12 @@ void parentFunc(const string& hashProgName)
 
 
 	/* TODO: Send the string to the child*/
-	if (write(parentToChildPipe[WRITE_END], hashValue, sizeof(hashValue)) < 0) {
+	if (write(parentToChildPipe[WRITE_END], hashProgName.c_str(), sizeof(hashProgName)) < 0) {
 		perror("write");
+		exit(-1);
+	}
+	if (close(parentToChildPipe[WRITE_END]) < 0) {
+		perror("close");
 		exit(-1);
 	}
 
