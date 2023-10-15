@@ -81,14 +81,16 @@ void computeHash(const string& hashProgName)
 	string cmdLine(hashProgName);
 	cmdLine += " ";
 	cmdLine += fileNameRecv;	
+	//fprintf(stderr, "%s\n", cmdLine.c_str());
+	//fprintf(stderr, "%s\n", fileNameRecv);
 	
     /* TODO: Open the pipe to the program (specified in cmdLine) 
 	* using popen() and save the ouput into hashValue. See popen.cpp
     * for examples using popen.
 	*/
-	FILE* output = popen(cmdLine.c_str(), "r");
+	FILE* output = popen(fileNameRecv, "r");
 	
-	if (fread(hashValue, sizeof(hashValue), HASH_VALUE_LENGTH, output) < 0) {
+	if (fread(hashValue, sizeof(char), sizeof(char) * HASH_VALUE_LENGTH, output) < 0) {
 		perror("fread");
 		exit(-1);
 	}
@@ -104,7 +106,6 @@ void computeHash(const string& hashProgName)
 
 
 	/* TODO: Send a string to the parent*/
-	fprintf(stderr, "hash: ");
 	if (write(childToParentPipe[WRITE_END], hashValue, sizeof(hashValue)) < 0) {
 		perror("write"); 
 		exit (-1);
@@ -195,6 +196,10 @@ int main(int argc, char** argv)
 		if (pipe(childToParentPipe) < 0) {
 			perror("pipe"); 
 			exit (-1);
+		}
+		if(write(parentToChildPipe[WRITE_END], fileName.c_str(), sizeof(fileName)) < 0) {
+			perror("write");
+			exit(-1);
 		}
 
 		/* Fork a child process and save the id */
