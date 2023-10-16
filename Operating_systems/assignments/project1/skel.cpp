@@ -135,11 +135,11 @@ void parentFunc(const string& hashProgName)
 
 	/* TODO: Send the string to the child*/
 	if (write(parentToChildPipe[WRITE_END], hashProgName.c_str(), sizeof(hashProgName)) < 0) {
-		perror("write");
+		perror("write in parent");
 		exit(-1);
 	}
 	if (close(parentToChildPipe[WRITE_END]) < 0) {
-		perror("close");
+		perror("close in parent");
 		exit(-1);
 	}
 
@@ -149,7 +149,7 @@ void parentFunc(const string& hashProgName)
 		exit(-1);
 	 }
 	 if (close(childToParentPipe[READ_END]) < 0) {
-		perror("close");
+		perror("close in parent");
 		exit(-1);
 	}
 
@@ -205,11 +205,11 @@ int main(int argc, char** argv)
 		{
 			/** TODO: close the unused ends of two pipes **/
 		if(close(childToParentPipe[READ_END]) < 0 ) {
-			perror("close in child");
+			perror("close in main");
 			exit(-1);
 		}
 		if(close(parentToChildPipe[WRITE_END]) < 0 ) {
-			perror("close 2in child");
+			perror("close in main");
 			exit(-1);
 		}
 
