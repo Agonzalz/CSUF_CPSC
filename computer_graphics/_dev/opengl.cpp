@@ -461,7 +461,7 @@ int main ( int argc, char *argv[] ) {
 //  glut_sphere_cool(argc, argv);
 //  glut_many_solids(argc, argv);
 //  rotating_cube(argc, argv);
-  rotate_tetra(argc, argv);
+//  rotate_tetra(argc, argv);
 //  glut_rot_teapot(argc, argv);
 
   std::cout << "...program completed\n";
