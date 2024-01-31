@@ -8,6 +8,7 @@ def normalize(vector):
 def reflected(vector, axis):
     return vector - 2 * np.dot(vector, axis) * axis
 
+
 def sphere_intersect(center, radius, ray_origin, ray_direction):
     b = 2 * np.dot(ray_direction, ray_origin - center)
     c = np.linalg.norm(ray_origin - center) ** 2 - radius ** 2
@@ -30,7 +31,7 @@ def nearest_intersected_object(objects, ray_origin, ray_direction):
             nearest_object = objects[index]
     return nearest_object, min_distance
 
-
+#every python function gets a list a dictionary list of unamed parameters and dictionary of named parameters
 def ray_tracer(width=300, height =200):
 
     max_depth = 3
@@ -52,6 +53,7 @@ def ray_tracer(width=300, height =200):
     ]
 
     image = np.zeros((height, width, 3))
+    print(f"{height} lines ", end=' ', flush=True)
     for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
         for j, x in enumerate(np.linspace(screen[0], screen[2], width)):
             # screen is on origin
@@ -101,12 +103,13 @@ def ray_tracer(width=300, height =200):
                 direction = reflected(direction, normal_to_surface)
 
             image[i, j] = np.clip(color, 0, 1)
-        print("%d/%d" % (i + 1, height))
+        if (i + 1) % (height/10) == 0: #does it every 20
+            print(i+1, end= ' ', flush=True) #flush prints to memory buffer until it sees newline flushes buffer everytime so like every 20 and end ='' should make it space instead of newline
 
-    plt.imsave('image.png', image)
+    plt.imsave('image.png', image) 
 
 def main():
-    ray_tracer()
+    ray_tracer(height=400)
 
 if __name__ == '__main__':
     main()
