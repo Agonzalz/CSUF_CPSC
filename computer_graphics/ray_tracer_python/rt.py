@@ -30,7 +30,16 @@ def nearest_intersected_object(objects, ray_origin, ray_direction):
             min_distance = distance
             nearest_object = objects[index]
     return nearest_object, min_distance
-
+class Sphere:
+    def __init__(self, center=(0.0, 0.0, 0.0), radius = 1.0, ambient = (0.1, 0, 0), diffuse, specular= (1, 1, 1), shininess, reflection):
+        self.center = np.array(list(center))
+        self.radius = radius
+        self.ambient = np.array(list(ambient))
+        self.diffuse = np.array(list(diffuse))
+        self.specular = np.array(list(specular))
+        self.shininess = shininess
+        self.reflection = reflection
+        pass
 #every python function gets a list a dictionary list of unamed parameters and dictionary of named parameters
 def ray_tracer(width=300, height =200):
 
