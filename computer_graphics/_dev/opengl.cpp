@@ -345,9 +345,57 @@ void display_tetra(void) {
     glEndList();
     glEnable(GL_DEPTH_TEST);
   }
+  
   // A display list has been created, which will be called each time a regular tetrahedron is drawn
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glPushMatrix();  glRotatef(angle, 1, 0.5, 0);  glCallList(list);  glPopMatrix();  glutSwapBuffers();
+}
+
+// Similar to display_tetra but accounts for extra vertices and faces
+void display_octa(void) {
+    static int list = 0;
+    if (list == 0) {
+        // If the display list does not exist, create
+        GLfloat
+            PointA[] = { 0.0f, 0.0f, 0.5f },      // Top vertex
+            PointB[] = { 0.5f, 0.0f, 0.0f },      // Bottom-right vertex
+            PointC[] = { 0.0f, 0.0f, -0.5f },     // Bottom vertex
+            PointD[] = { -0.5f, 0.0f, 0.0f },     // Bottom-left vertex
+            PointE[] = { 0.0f, 0.5f, 0.0f },      // Top-front vertex
+            PointF[] = { 0.0f, -0.5f, 0.0f };     // Bottom-back vertex
+
+        GLfloat
+            ColorR[] = { 1, 0, 0 },
+            ColorG[] = { 0, 1, 0 },
+            ColorB[] = { 0, 0, 1 },
+            ColorY[] = { 1, 1, 0 };
+
+        list = glGenLists(1);
+        glNewList(list, GL_COMPILE);
+        glBegin(GL_TRIANGLES);
+        
+        
+        ColoredVertex(ColorR, PointA);  ColoredVertex(ColorG, PointE);  ColoredVertex(ColorB, PointB);
+
+        ColoredVertex(ColorG, PointE);  ColoredVertex(ColorY, PointD);  ColoredVertex(ColorR, PointA);
+
+        ColoredVertex(ColorG, PointE);  ColoredVertex(ColorR, PointC);  ColoredVertex(ColorY, PointD);
+
+        ColoredVertex(ColorG, PointE);  ColoredVertex(ColorB, PointB);  ColoredVertex(ColorR, PointC);
+
+        ColoredVertex(ColorG, PointF);  ColoredVertex(ColorB, PointB);  ColoredVertex(ColorR, PointA);
+
+        ColoredVertex(ColorR, PointF);  ColoredVertex(ColorR, PointA);  ColoredVertex(ColorY, PointD);
+
+        ColoredVertex(ColorG, PointF);  ColoredVertex(ColorY, PointD);  ColoredVertex(ColorR, PointC);
+
+        glEnd();
+        glEndList();
+        glEnable(GL_DEPTH_TEST);
+    }
+    // A display list has been created, which will be called each time an octahedron is drawn
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();  glRotatef(angle, 1, 0.5, 0);  glCallList(list);  glPopMatrix();  glutSwapBuffers();
 }
 
 void idle(void) {
@@ -355,6 +403,13 @@ void idle(void) {
   if (angle >= 360.0f) { angle = 0.0f; }
   std::this_thread::sleep_for(std::chrono::milliseconds(10));
   display_tetra();
+}
+
+void idle_octa(void) {
+  ++angle;
+  if (angle >= 360.0f) { angle = 0.0f; }
+  std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  display_octa();
 }
 
 void rotate_tetra(int argc, char* argv[]) {
@@ -369,6 +424,17 @@ void rotate_tetra(int argc, char* argv[]) {
   glutMainLoop();
 }
 
+void glut_octahedron(int argc, char* argv[]) {
+  glutInit(&argc, argv);
+  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+  glutInitWindowPosition(500, 500);
+  glutInitWindowSize(WIDTH, HEIGHT);
+  glutCreateWindow("OpenGL Window");
+  glutDisplayFunc(&display_octa);
+
+  glutIdleFunc(&idle_octa);
+  glutMainLoop();
+}
 
 GLfloat x_rot, y_rot, z_rot;
 //GLdouble size = 10.0;
@@ -460,9 +526,11 @@ int main ( int argc, char *argv[] ) {
 //  glut_sphere(argc, argv);
 //  glut_sphere_cool(argc, argv);
 //  glut_many_solids(argc, argv);
-//  rotating_cube(argc, argv);
-//  rotate_tetra(argc, argv);
+//rotating_cube(argc, argv);
+//rotate_tetra(argc, argv);
 //  glut_rot_teapot(argc, argv);
+ glut_octahedron(argc, argv);
+
 
   std::cout << "...program completed\n";
   return 0;
