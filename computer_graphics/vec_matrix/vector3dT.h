@@ -263,8 +263,18 @@ template <typename T> vector3d<T>& vector3d<T>::operator-=(T k) {
     u[0] -= k;  u[1] -= k;  u[2] -= k;
     return *this;
  }
-template <typename T> vector3d<T>& vector3d<T>::operator*=(T k) { /* TODO */ }
-template <typename T> vector3d<T>& vector3d<T>::operator/=(T k) { /* TODO */ }
+template <typename T> vector3d<T>& vector3d<T>::operator*=(T k) { /* TODO */ 
+    vector3d<T>& u = *this;
+    u.name_ += "*=" + std::to_string(k);
+    u[0] *= k; u[1] *= k; u[2] *= k; 
+    return *this;
+}
+template <typename T> vector3d<T>& vector3d<T>::operator/=(T k) { /* TODO */ 
+    vector3d<T>& u = *this;
+    u.name_ += "/=" + std::to_string(k);
+    u[0] /= k; u[1] /= k; u[2] /= k; 
+    return *this;
+    }
 
 //---------------------------------------------------------------------
 template <typename T>  /* read only idx */
