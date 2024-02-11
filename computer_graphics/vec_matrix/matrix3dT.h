@@ -57,16 +57,16 @@ public:
                     { a[0] + k, a[1] + k, a[2] + k });
   }
   friend matrix3d operator+(T k, const matrix3d& a) { return  a + k; }
-  friend matrix3d operator-(const matrix3d& a, T k) { /* TODO */ return a + (-k); }
-  friend matrix3d operator-(T k, const matrix3d& a) { /* TODO */ return a - k; }
-  friend matrix3d operator*(const matrix3d& a, T k) { /* TODO */  
+  friend matrix3d operator-(const matrix3d& a, T k) { return a + (-k); }
+  friend matrix3d operator-(T k, const matrix3d& a) { return a - k; }
+  friend matrix3d operator*(const matrix3d& a, T k) { 
     return matrix3d(std::to_string(k) + "*" + a.name(), 3,
                     { a[0] * k, a[1] * k, a[2] * k });
   }
 
-  friend matrix3d<T> operator*(T k, const matrix3d& a) { /* TODO */return a * k; }
+  friend matrix3d<T> operator*(T k, const matrix3d& a) { return a * k; }
   friend matrix3d operator/(const matrix3d& a, T k) { 
-    if (abs(k) < epsilon_) { throw new std::invalid_argument("divide by zero error"); }
+    if (std::abs(k) < epsilon_) { throw new std::invalid_argument("divide by zero error"); }
     return a * (1.0 / k);  
   }
 //=======================================================================
@@ -348,8 +348,8 @@ template <typename T> vector3d<T>& matrix3d<T>::operator[](int i) {
   return cols_[i];
 }
 template <typename T> T matrix3d<T>::operator()(int row, int col) const { return cols_[col][row]; }
-template <typename T> T& matrix3d<T>::operator()(int row, int col) { /* TODO */ return cols_[col][row]; }
-template <typename T> T* matrix3d<T>::opengl_memory(int row, int col) { /* TODO */ }
+template <typename T> T& matrix3d<T>::operator()(int row, int col) { return cols_[col][row]; }
+template <typename T> T* matrix3d<T>::opengl_memory(int row, int col) { return *cols_[col][row];}
 // implement code here
 //=================================================================================================
 template <typename T> void matrix3d<T>::name(const std::string& name) { name_ = name; }
@@ -371,7 +371,7 @@ template <typename T> matrix3d<T>& matrix3d<T>::operator-=(T k) {
   }
   return *this;
 }
-template <typename T> matrix3d<T>& matrix3d<T>::operator*=(T k) { /* TODO */ 
+template <typename T> matrix3d<T>& matrix3d<T>::operator*=(T k) { 
   matrix3d<T>& a = *this;
   name_ = std::to_string(k) + "*" + name_;
   for (int i = 0; i < 4; ++i) {
@@ -380,7 +380,7 @@ template <typename T> matrix3d<T>& matrix3d<T>::operator*=(T k) { /* TODO */
   return *this;
 }
 template <typename T> matrix3d<T>& matrix3d<T>::operator/=(T k) { 
-  if (abs(k) < epsilon_) { throw new std::invalid_argument("divide by zero\n"); }
+  if (std::abs(k) < epsilon_) { throw new std::invalid_argument("divide by zero\n"); }
   return operator*=(1.0 / k); 
 }
 //=================================================================================================
@@ -405,7 +405,7 @@ template <typename T> matrix3d<T> matrix3d<T>::operator+(const matrix3d<T>& b) {
   return matrix3d<T>(name_ + "+" + b.name_, dims_,
                     { a[0] + b[0], a[1] + b[1], a[2] + b[2] });
 }
-template <typename T> matrix3d<T> matrix3d<T>::operator-(const matrix3d<T>& b) { /* TODO */
+template <typename T> matrix3d<T> matrix3d<T>::operator-(const matrix3d<T>& b) {
   const matrix3d<T>& a = *this;
   check_equal_dims(b);
   return matrix3d<T>(name_ + "-" + b.name_, dims_, 
@@ -413,7 +413,7 @@ template <typename T> matrix3d<T> matrix3d<T>::operator-(const matrix3d<T>& b) {
  }
 //=================================================================================================
 template <typename T> matrix3d<T> matrix3d<T>::operator*(const matrix3d<T>& b) {
-  matrix3d res(name_ + "+" + b.name_, 3);
+  matrix3d res(name_ + "*" + b.name_, 3);
   const matrix3d<T>& a = *this;
   for (int i = 0; i < dims_; ++i) {
     for (int j = 0; j < dims_; ++j) {
@@ -433,7 +433,7 @@ template <typename T> matrix3d<T> matrix3d<T>::transpose() const {
                                 m(0,2), m(1,2), m(2,2),  m(0,3), m(1,3), m(2,3)} );
   return res;
 }
-template <typename T> T matrix3d<T>::determinant() const { /* TODO */
+template <typename T> T matrix3d<T>::determinant() const {
   const matrix3d<T>& m = *this;
   check_equal_dims(m);
   matrix3d min = m.minors();
@@ -475,7 +475,7 @@ template <typename T> matrix3d<T> matrix3d<T>::minors() const {
     m(0, 0) * m(1, 1) - m(0, 1) * m(1, 0),
   });
 }
-template <typename T> matrix3d<T> matrix3d<T>::cofactor() const { /* TODO */ 
+template <typename T> matrix3d<T> matrix3d<T>::cofactor() const {
   const matrix3d<T>& m = *this;
   matrix3d res = m.minors();
   //takes every sum of row+column that is odd and multiplies it by -1
@@ -488,12 +488,12 @@ template <typename T> matrix3d<T> matrix3d<T>::cofactor() const { /* TODO */
   }
   return res;
 }
-template <typename T> matrix3d<T> matrix3d<T>::adjoint() const { /* TODO */ 
+template <typename T> matrix3d<T> matrix3d<T>::adjoint() const {  
   const matrix3d<T>& m = *this;
   matrix3d res = m.cofactor();
   return res.transpose();
 }
-template <typename T> matrix3d<T> matrix3d<T>::inverse() const { /* TODO */ 
+template <typename T> matrix3d<T> matrix3d<T>::inverse() const {  
   const matrix3d<T>& m = *this;
   return m.adjoint()/m.determinant();
 
@@ -501,17 +501,19 @@ template <typename T> matrix3d<T> matrix3d<T>::inverse() const { /* TODO */
 
 }
 //=================================================================================================
-template <typename T> matrix3d<T> matrix3d<T>::identity(int dims) { /* TODO */ 
+template <typename T> matrix3d<T> matrix3d<T>::identity(int dims) { 
   return matrix3D("id", dims, {1,0,0,    0,1,0,    0,0,1});
 }
-template <typename T> matrix3d<T> matrix3d<T>::zero(int dims) { /* TODO */ }
+template <typename T> matrix3d<T> matrix3d<T>::zero(int dims) { 
+  return matrix3D("zero", dims, {0,0,0,    0,0,0,    0,0,0});
+}
 template <typename T> bool matrix3d<T>::operator==(const matrix3d<T>& b) const {
   check_equal_dims(b);
   const matrix3d<T>& a = *this;
   T error = T();
   for (int i = 0; i < dims_; ++i) {
     for (int j = 0; j < dims_; ++j) {
-      error += abs((double)(a(i, j) - b(i, j)));
+      error += std::abs((double)(a(i, j) - b(i, j)));
     }
   }
   return error < epsilon_;
