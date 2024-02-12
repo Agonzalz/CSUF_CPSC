@@ -477,7 +477,8 @@ template <typename T> matrix3d<T> matrix3d<T>::minors() const {
 }
 template <typename T> matrix3d<T> matrix3d<T>::cofactor() const {
   const matrix3d<T>& m = *this;
-  matrix3d res = m.minors();
+  matrix3d<T> res = m.minors();
+  res.name_ = m.name_ + ".Cofactor";
   //takes every sum of row+column that is odd and multiplies it by -1
   for (int i = 0; i < 3; i++) {           
     for (int j = 0; j < 3; j++) {
@@ -490,15 +491,15 @@ template <typename T> matrix3d<T> matrix3d<T>::cofactor() const {
 }
 template <typename T> matrix3d<T> matrix3d<T>::adjoint() const {  
   const matrix3d<T>& m = *this;
-  matrix3d res = m.cofactor();
+  matrix3d<T> res = m.cofactor();
+  res.name_ = m.name_ + ".Adjoint";
   return res.transpose();
 }
 template <typename T> matrix3d<T> matrix3d<T>::inverse() const {  
   const matrix3d<T>& m = *this;
-  return m.adjoint()/m.determinant();
-
-
-
+  matrix3d<T> res = m.adjoint()/m.determinant();
+  res.name_ = m.name_ + ".Inverse";
+  return res;
 }
 //=================================================================================================
 template <typename T> matrix3d<T> matrix3d<T>::identity(int dims) { 
