@@ -31,13 +31,13 @@ public:
   static double kk() {return -1;}
   static double ijk() {return -1;}
 
-  static quaternion ij();
-  static quaternion jk();
-  static quaternion ki();
+  static quaternion ij(){return k;}
+  static quaternion jk(){return i;}
+  static quaternion ki(){return j;}
 
-  static quaternion ji();
-  static quaternion kj();
-  static quaternion ik();
+  static quaternion ji(){return -k;}
+  static quaternion kj(){return -i;}
+  static quaternion ik(){return -j;}
 
   friend quaternion operator+(const quaternion& a, const quaternion& b);
   friend quaternion operator-(const quaternion& a, const quaternion& b);
