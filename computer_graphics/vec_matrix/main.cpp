@@ -9,10 +9,12 @@
 //MATRIX and VECTOR classes assignment
 #include "vector3dT.h"
 #include "matrix3dT.h"
+#include "quaternion_T.h"
 
 int main(int argc, const char * argv[]) {
-  vector3D::run_tests();
-  matrix3D::run_tests(); 
+  //vector3D::run_tests();
+  ////matrix3D::run_tests(); 
+  
   
     
   return 0;

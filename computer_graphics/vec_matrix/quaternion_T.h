@@ -22,14 +22,14 @@ public:
   quaternion(T w_=T(), T x_=T(), T y_=T(), T z_=T())
   : w(w_), x(x_), y(y_), z(z_) { }
 
-  static quaternion i();
-  static quaternion j();
-  static quaternion k();
+  static quaternion i() {return quaternion(0, 1, 0, 0); }
+  static quaternion j() {return quaternion( 0, 0, 1 , 0);}
+  static quaternion k() {return quaternion(0, 0, 0, 1);}
 
-  static double ii();
-  static double jj();
-  static double kk();
-  static double ijk();
+  static double ii(){return -1;}
+  static double jj() {return -1;}
+  static double kk() {return -1;}
+  static double ijk() {return -1;}
 
   static quaternion ij();
   static quaternion jk();
@@ -94,7 +94,7 @@ public:
    if (q.magnitude() == 0.0 && q.w == 0)   { return os << "0)"; }
    if (q.magnitude() == 0.0 && q.w == 0)   { return os << "0)"; }
    if (q.magnitude() == 1.0 && q.w == 1)   { return os << "1)"; }
-   if (q.vector().magnitude() == 0.0)      { return os << q.w << ")"; }
+   if (q.vector().mag() == 0.0)      { return os << q.w << ")"; }
    else { return os << q.w << q.vector() << ")"; }
  }
 
@@ -105,7 +105,7 @@ private:
 };
 
 void plane_rotation(const std::string& msg, const quatD& plane, const std::initializer_list<double>& li) {
- matrix3dD rotate = matrix3dD("rot_matrix", 3, li);
+ matrix3D rotate = matrix3D("rot_matrix", 3, li);
  assert(plane.rot_matrix() == rotate);
  std::cout << msg << " is: " << plane << plane.rot_matrix() << "\n";
 }
@@ -155,7 +155,7 @@ void quaternion<T>::run_tests() {
  std::cout << "\nangle (deg) between c and d is: " << c.angle(d) << "\n";
  quatD c_minus_d = c - d;
  std::cout << "c_minus_d is: " << c_minus_d;
- matrix3dD rot_matrix = c_minus_d.rot_matrix();
+ matrix3D rot_matrix = c_minus_d.rot_matrix();
  std::cout << "rot_matrix of c_minus_d is: " << c_minus_d.rot_matrix() << "\n";
 
  double rad2_2 = sqrt(2)/2.0;
