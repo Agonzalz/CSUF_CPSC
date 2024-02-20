@@ -31,56 +31,119 @@ public:
   static double kk() {return -1;}
   static double ijk() {return -1;}
 
-  static quaternion ij(){return k;}
-  static quaternion jk(){return i;}
-  static quaternion ki(){return j;}
+  static quaternion ij(){return k();}
+  static quaternion jk(){return i();}
+  static quaternion ki(){return j();}
 
-  static quaternion ji(){return -k;}
-  static quaternion kj(){return -i;}
-  static quaternion ik(){return -j;}
+  static quaternion ji(){return -k();}
+  static quaternion kj(){return -i();}
+  static quaternion ik(){return -j();}
 
-  friend quaternion operator+(const quaternion& a, const quaternion& b);
-  friend quaternion operator-(const quaternion& a, const quaternion& b);
-  friend quaternion operator*(const quaternion& a, const quaternion& b);
+  friend quaternion operator+(const quaternion& a, const quaternion& b) {
+    return quaternion(a.w+b.w, a.x+b.x, a.y+b.y, a.z+b.z);
+  }
+  friend quaternion operator-(const quaternion& a, const quaternion& b) {
+    return quaternion(a + (-b));
+  }
+  friend quaternion operator*(const quaternion& a, const quaternion& b) {
+    return quaternion(a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z,
+                      a.x*b.w + a.w*b.x + a.y*b.z - a.z*b.y,
+                      a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x,
+                      a.w*b.z + a.x*b.y - a.y*b.x + a.z*b.w);
+  }
 
-  friend quaternion operator+(const quaternion& q, T k);
-  friend quaternion operator+(T k, const quaternion& q);
+  friend quaternion operator+(const quaternion& q, T k) {
+    return quaternion(q.w+k, q.x+k, q.y+k, q.z+k);
+  }
+  friend quaternion operator+(T k, const quaternion& q) {return q + k;}
 
 
-  friend quaternion operator-(const quaternion& q, T k);
-  friend quaternion operator-(T k, const quaternion& q);
+  friend quaternion operator-(const quaternion& q, T k) {return q + (-k);}
+  friend quaternion operator-(T k, const quaternion& q) {return -(q - k);}
 
-  friend quaternion operator*(const quaternion& q, T k);
-  friend quaternion operator*(T k, const quaternion& q);
-  friend quaternion operator/(const quaternion& q, T k);
+  friend quaternion operator*(const quaternion& q, T k) {
+    return quaternion(k * q.w, k * q.x, k * q.y, k * q.z);
+  }
+  friend quaternion operator*(T k, const quaternion& q) {return q * k;}
+  friend quaternion operator/(const quaternion& q, T k) {return q * (1 / k);}
 
 
-  quaternion operator-() const;
+  quaternion operator-() const {
+    const quaternion& q = *this;
+    return quaternion(-q.w, -q.x, -q.y, -q.z);
+  }
 
-  friend bool operator==(const quaternion& q, const quaternion& r);
-  friend bool operator!=(const quaternion& q, const quaternion& r);
-  vector3d<T> vector() const;
-  T scalar() const;
+  friend bool operator==(const quaternion& q, const quaternion& r) {
+    return q.w == r.w && q.x == r.x && q.y == r.y && q.z == r.z;
+  }
+  friend bool operator!=(const quaternion& q, const quaternion& r) {return !(q == r);}
+  
+  vector3d<T> vector() const {
+    quaternion q = *this;
+    return vector3d("v", 3, {q.x, q.y, q.z});}
+  
+  T scalar() const {
+    quaternion q = *this;
+    return q.w;
+    }
 
-  quaternion unit_scalar() const;
+  quaternion unit_scalar() const {return quaternion(1, vector());}
 
-  quaternion conjugate() const;
+  quaternion conjugate() const {
+    quaternion q = *this;
+    return quaternion(q.w, -q.x, -q.y, -q.z);
+    }
 
-  quaternion inverse() const;
+  quaternion inverse() const {
+    quaternion q = *this;
+    return q.conjugate()/pow(q.magnitude(), 2);
+  }
 
-  quaternion unit() const;
+  quaternion unit() const {
+    quaternion q = *this;
+    return q/q.magnitude();
+  }
 
-  double norm() const;
-  double magnitude() const;
+  double norm() const {
+     quaternion q = *this;
+     return sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
+  }
+  double magnitude() const {
+    quaternion q = *this;
+    return q.norm();
+    }
 
-  double dot(const quaternion& v) const;
+  double dot(const quaternion& v) const {
+    quaternion q = *this;
+    q.w * v.w + q.vector().dot(v.vector());
+  }
 
-  double angle(const quaternion& v) const;
+  double angle(const quaternion& v) const {
+    quaternion q = *this;
+    q = q.conjugate() * v;
+    double qnorm =q.vector().norm();
+    T qscalar = q.scalar();
+    double angle = atan2(qnorm, qscalar);
+    return angle * 180/M_PI;
+  }
 
-  matrix3d<T> rot_matrix() const;
+  matrix3d<T> rot_matrix() const {
+    quaternion q = *this;
+    return matrix3d("rotation", 3, {-2*(q.y * q.y + q.z * q.z) + 1,  2*(q.x*q.y - q.w*q.z),     2*(q.x*q.z + q.w*q.y),
+                                     2*(q.x*q.y + q.w*q.z),         -2*(q.x*q.x + q.z*q.z) + 1, 2*(q.y*q.z - q.w*q.x),
+                                     2*(q.x*q.z - q.w*q.y),          2*(q.y*q.z + q.w*q.x),    -2*(q.x*q.x + q.y*q.y)+1});
+  }
 
  // rotates point pt (pt.x, pt.y, pt.z) about (axis.x, axis.y, axis.z) by theta
- static vec3 rotate(const vector3D& pt, const vector3D& axis, double theta);
+ static vec3 rotate(const vector3D& pt, const vector3D& axis, double theta) {
+    double cosine = cos(theta/2);
+    double sine = sin(theta/2);
+    quaternion q(cosine, axis[0] * sine, axis[1] * sine, axis[2] * sine);
+    quaternion qstar(q.w, -q.x, -q.y, -q.z);
+    quaternion p(0, pt[0], pt[1], pt[2]);
+    quaternion prot = q * p * qstar;
+    return vector3D("rotated point", 3, {prot.x, prot.y, prot.z});
+ }
 
  friend std::ostream& operator<<(std::ostream& os, const quaternion& q) {
    os << "Quat(";
