@@ -5,6 +5,14 @@
 #include <cstring>
 #include <initializer_list>
 #include <cassert>
+#include "quaternion_T.h"
+
+void test_quaternions() {
+    printf("\n====================  TESTING QUATERNIONS  ========================");
+    quaternion<double>::run_tests();
+    printf("...test_matrices_and_vectors assertions passed");
+    printf("====================  FINISHED testing quaternions  ========================");
+}
 
 //MATRIX and VECTOR classes assignment
 #include "vector3dT.h"
@@ -13,10 +21,9 @@
 
 int main(int argc, const char * argv[]) {
   //vector3D::run_tests();
-  ////matrix3D::run_tests(); 
-  
-  
-    
+  //matrix3D::run_tests(); 
+  test_quaternions();
+     
   return 0;
 }
 
